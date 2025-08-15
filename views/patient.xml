@@ -1,0 +1,79 @@
+<odoo>
+
+    <record id="clinic_work_schedule_views_list" model="ir.ui.view">
+        <field name="name">clinic.patient.list</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <list>
+
+                    <field name="full_name"/>
+                    <field name="birth_date"/>
+                    <field name="gender"/>
+                    <field name="phone_number"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="clinic_patient_views_form" model="ir.ui.view">
+
+    <field name="name">clinic.patient.form</field>
+    <field name="model">clinic.patient</field>
+    <field name="arch" type="xml">
+        <form>
+        <sheet>
+            <group>
+            <group>
+                <field name="full_name"/>
+                <field name="birth_date"/>
+                <field name="gender"/>
+            </group>
+            <group>
+
+                <field name="phone_number"/>
+                <field name="blood_type"/>
+                <field name="insured_number"/>
+            </group>
+
+            </group>
+
+            <notebook>
+            <page string="Bekor yaqinlari">
+            <field name="relative_ids">
+            <list editable="bottom">
+                <field name="full_name"/>
+                <field name="phone_number"/>
+            </list>
+            </field>
+            </page>
+
+            <page string="Kasallik tarixi">
+            <field name="appointment_ids" readonly="1">
+            <list editable="bottom">
+            <field name="disease_name" readonly="1"/>
+            <field name="start_time" string="Vaqti" readonly="1"/>
+            <field name="doctor_id" readonly="1"/>
+            <field name="medicine_name"/>
+            
+
+            </list>
+            </field>
+            </page>
+            </notebook>
+
+
+
+            </sheet>
+        </form>
+    </field>
+    </record>
+    
+    <record id="clinic_patient_action" model="ir.actions.act_window">
+        <field name="name">Bemorlar</field>
+        <field name="res_model">clinic.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="clinic_menu_subdomain_patient" name="Bemorlar" parent="clinic_menu" action="clinic_patient_action"/>
+
+</odoo>
