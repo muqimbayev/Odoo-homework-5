@@ -53,6 +53,12 @@
             <field name="disease_name" readonly="1"/>
             <field name="start_time" string="Vaqti" readonly="1"/>
             <field name="doctor_id" readonly="1"/>
+            <field name="status" readonly="1" widget="badge"
+            decoration-danger="status == 'canceled'"
+            decoration-info="status == 'new'"
+            decoration-success="status == 'recovered'"
+            decoration-warning="status == 'treated'"
+            />
             <field name="medicine_name"/>
             
 

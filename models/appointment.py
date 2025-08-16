@@ -41,5 +41,6 @@ class Appointment(models.Model):
     def _compute_title_field(self):
         for record in self:
             record.title_field = f"Qabul-{record.patient_id.full_name}"
+
     
     

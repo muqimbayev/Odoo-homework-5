@@ -32,4 +32,22 @@ class ClinicPrescriptionLine(models.Model):
     def age_validation(self):
         for rec in self:
             if rec.user_age<rec.medicine_id.suitable_age:
-                raise ValidationError(f"{rec.medicine_id.name} {rec.medicine_id.suitable_age} yoshdan kattlar uchun beriladi.")
+                return {'warning':{
+                        'title': "Yoshga mos kelmaydi",
+                        'message': f"{rec.medicine_id.name} {rec.medicine_id.suitable_age} dan katta yoshdagilar uchun!"
+                                }
+                    }
+
+    @api.onchange('medicine_id')
+    def check_contraindication(self):
+        for rec in self:
+            con_list = rec.medicine_id.contraindications.mapped('name')  
+            pre_list = rec.appointment_id.prescription_line_ids.medicine_id.mapped('name')
+            unsuitable = [i for i in con_list if i in pre_list]
+            if unsuitable:
+                return {
+                    'warning': {
+                        'title': "Kontraindikatsiya!",
+                        'message': f"Bu dori quyidagi dorilar bilan mos emas: {', '.join(unsuitable)}"
+                    }
+                }
