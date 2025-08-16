@@ -52,12 +52,16 @@
                 <group>
                     <field name="doctor_id"/>
                     <field name="patient_id"/>
+                    <field name="disease_name"/>
+                    <field name="reception_duration"/>
+
+
                     </group>
                         <group>
                             <field name="start_time"/>
                             <field name="end_time"/>
                             <field name="status"/>
-                            <field name="disease_name"/>
+                            <field name="total_price"/>
                         </group>
                         <notebook>
                         <page string="Retsept">

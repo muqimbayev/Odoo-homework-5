@@ -11,5 +11,6 @@ class Doctor(models.Model):
     phone_number = fields.Char(string="Telefon raqami")
     work_schedule_ids = fields.One2many(comodel_name="clinic.work_schedule", inverse_name="doctor_id")
     is_active = fields.Boolean(string="Ish statusi", default=True)
-
+    appointment_ids = fields.One2many(comodel_name="clinic.appointment", inverse_name="doctor_id")
+    reception_price = fields.Float(string="30 daqiqalik qabul narxi")
     

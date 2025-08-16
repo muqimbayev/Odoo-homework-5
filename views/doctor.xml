@@ -9,6 +9,7 @@
                     <field name="full_name"/>
                     <field name="specialty"/>
                     <field name="experience"/>
+                    <field name="reception_price"/>
             </list>
         </field>
     </record>
@@ -23,11 +24,13 @@
             <group>
                 <field name="full_name"/>
                 <field name="specialty"/>
+                <field name="reception_price"/>
                 <field name="experience"/>
                 <field name="phone_number"/>
                 <field name="is_active"/>
             </group>
             <notebook>
+
                 <page string="Ish grafigi">
                     <field name="work_schedule_ids">
                         <list editable="bottom">
