@@ -38,7 +38,7 @@
             </group>
 
             <notebook>
-            <page string="Bekor yaqinlari">
+            <page string="Bemor yaqinlari">
             <field name="relative_ids">
             <list editable="bottom">
                 <field name="full_name"/>

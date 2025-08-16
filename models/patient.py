@@ -10,7 +10,7 @@ class Patient(models.Model):
     birth_date = fields.Date(string="Tug'ilgan yili", required=True)
     gender = fields.Selection([('male', 'Erkak'), ('female', 'Ayol')], required=True, string="Jinsi")
     phone_number = fields.Char(string="Telefon raqami")
-    blood_type = fields.Selection([("first", "Birinchi"), ("second", "Ikkinchi"), ("third", "Uchinchi")], required=True)
+    blood_type = fields.Selection([("first", "Birinchi"), ("second", "Ikkinchi"), ("third", "Uchinchi")], required=True, string="Qon guruhi")
     insured_number = fields.Char(string="Sug'irta raqami")
     relative_ids = fields.One2many(comodel_name="clinic.relatives", inverse_name="patient_id")
     appointment_ids = fields.One2many(comodel_name="clinic.appointment", inverse_name="patient_id")
