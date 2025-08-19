@@ -34,7 +34,7 @@ class Order_line(models.Model):
                     }
                 }
     
-    @api.depends('real_price', 'cost')
+    @api.depends('real_price', 'count')
     def _compute_profit(self):
         for record in self:
             record.profit = (record.real_price - record.product_id.cost)*record.count
