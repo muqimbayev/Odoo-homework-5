@@ -1,0 +1,75 @@
+<odoo>
+
+    <record id="ecommerce2_product_views_list" model="ir.ui.view">
+        <field name="name">ecommerce2.product.list</field>
+        <field name="model">ecommerce2.product</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="cost"/>
+                <field name="quantity"/>
+                <field name="total_price"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="ecommerce2_product_views_form" model="ir.ui.view">
+        <field name="name">ecommerce2.product.form</field>
+        <field name="model">ecommerce2.product</field>
+        <field name="arch" type="xml">
+            <form>
+            <sheet>
+                <group>
+                    <group string="Asosiy malumotlar">
+                        <field name="name"/>
+                        <field name="category_id"/>
+                        <field name="quantity"/>
+                        <field name="slug"/>
+
+
+                    </group>
+                    <group string="Narx malumotlari">
+                        <field name="price"/>
+                        <field name="cost"/>
+                        <field name="tex"/>
+                        <field name="discount"/>
+                    </group>
+                </group>
+                
+                    <notebook>
+                    <page string="Hajm malumotlari">
+                    <group>
+                        <field name="length"/>
+                        <field name="width"/>
+                        <field name="height"/>
+                        <field name="volume"/>
+                    </group>
+                    </page>
+                    <page string="Narx bo'yicha malumotlar">
+                    <group>
+                        <field name="real_price"/>
+                        <field name="markup_percent"/>
+                        <field name="tex_amount"/>
+                        <field name="total_price"/>
+
+                       
+                    </group>
+                    </page>
+                    </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ecommerce2_views_action" model="ir.actions.act_window">
+        <field name="name">Mahsulotlar</field>
+        <field name="res_model">ecommerce2.product</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="ecommerce2_product_submenu" name="Mahsulotlar" parent="ecommerce2_menu" action="ecommerce2_views_action"/>
+
+</odoo>

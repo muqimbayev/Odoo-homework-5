@@ -1,0 +1,76 @@
+<odoo>
+
+    <record id="ecommerce2_customer_views_list" model="ir.ui.view">
+        <field name="name">ecommerce2.customer.list</field>
+        <field name="model">ecommerce2.customer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="full_name"/>
+                <field name="age"/>
+                <field name="region"/>
+                <field name="order_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ecommerce2_customer_views_form" model="ir.ui.view">
+        <field name="name">ecommerce2.customer.from</field>
+        <field name="model">ecommerce2.customer</field>
+        <field name="arch" type="xml">
+            <form>
+
+            <div class="oe_button_box" name="button_box">
+            <button name="action_count_order_customer" type="object"
+        class="oe_stat_button" icon="fa-pencil-square-o">
+    <field name='order_count' widget='statinfo' string="Buyurtmalar"/>
+</button>
+
+            </div>
+
+             <sheet>
+                <group>
+                    <group string="Asosiy malumotlar">
+                        <field name="first_name"/>
+                        <field name="last_name"/>
+                        <field name="middle_name"/>
+                        <field name="birth_date"/>
+
+                        
+                    </group>
+                    <group string="Aloqa malumotlari">
+                        <field name="phone_number"/>
+                        <field name="email"/>
+                        <field name="email_domain"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Yetkazib berish malumotlari">
+                    <group>
+                        <field name="country"/>
+                        <field name="region"/>
+                        <field name="district"/>
+                        <field name="street"/>
+                        <field name="address"/>
+
+                    </group>
+
+                    </page>
+                </notebook>
+        </sheet>
+
+            </form>
+        
+    
+        </field>
+    </record>
+
+    <record id="ecommerce2_customer_action" model="ir.actions.act_window">
+        <field name="name">Mijoz Malumotlari</field>
+        <field name="res_model">ecommerce2.customer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="ecommerce2_customer_submenu" name="Mijozlar" parent="ecommerce2_menu" action="ecommerce2_customer_action"/>
+
+
+</odoo>

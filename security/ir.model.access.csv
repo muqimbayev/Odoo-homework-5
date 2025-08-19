@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ecommerce_category_user,ecommerce.category user,model_ecommerce2_category,base.group_user,1,1,1,1
+access_ecommerce_customer_user,ecommerce.customer user,model_ecommerce2_customer,base.group_user,1,1,1,1
+access_ecommerce_order_line_user,ecommerce.order_line user,model_ecommerce2_order_line,base.group_user,1,1,1,1
+access_ecommerce_order_user,ecommerce.order user,model_ecommerce2_order,base.group_user,1,1,1,1
+access_ecommerce_product_user,ecommerce.product user,model_ecommerce2_product,base.group_user,1,1,1,1

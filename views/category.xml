@@ -1,0 +1,60 @@
+<odoo>
+
+    <record id="ecommerce2_category_view_tree" model="ir.ui.view">
+        <field name="name">ecommerce2.categrry_list</field>
+        <field name="model">ecommerce2.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="product_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ecommerce2_categroy_view_form" model="ir.ui.view">
+        <field name="name">ecommerce2_categroy_view_form</field>
+        <field name="model">ecommerce2.category</field>
+        <field name="arch" type="xml">
+        <form>
+        <sheet>
+            <group>
+                <field name="name"/>
+                <field name="product_count"/>
+            </group>
+
+            <notebook>
+            <page string="Mahsulotlar">
+            <field name="product_ids">
+            <list editable="bottom">
+            <field name="name"/>
+            <field name="price"/>
+            <field name="cost"/>
+            <field name="volume"/>
+            <field name="quantity"/>
+
+
+            </list>
+            </field>
+            </page>
+            </notebook>
+
+            </sheet>
+
+        </form>
+       </field>
+    </record>
+
+    <record id="ecommerce2_category_action" model="ir.actions.act_window">
+        <field name="name">Kategoriya</field>
+        <field name="res_model">ecommerce2.category</field>
+    <field name="view_mode">list,form</field>
+        </record>
+
+
+    <menuitem id="ecommerce2_menu" name="Elektron savdo"/>
+    <menuitem id="ecommerce2_category_submenu" name="Kategoriya" parent="ecommerce2_menu" action="ecommerce2_category_action"/> 
+
+
+
+
+</odoo>

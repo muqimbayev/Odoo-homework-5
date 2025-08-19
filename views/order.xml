@@ -1,0 +1,93 @@
+<odoo>
+
+    <record id="ecommerce2_order_views_list" model="ir.ui.view">
+        <field name="name">ecommerce2.order.list</field>
+        <field name="model">ecommerce2.order</field>
+        <field name="arch" type="xml">
+        <list>
+            <field name="id"/>
+            <field name="delivery_deadline"/>
+            <field name="delivery_days_left"/>
+            <field name="product_count"/>
+            <field name="order_status" widget="badge"
+            decoration-info="order_status == 'new'"
+            decoration-danger="order_status == 'cancel'"
+            decoration-warning="order_status == 'confirm'"
+            decoration-success="order_status == 'deliver'"
+
+            />
+            </list>
+        </field>
+    </record>
+
+    <record id="ecommerce2_order_views_form" model="ir.ui.view">
+        <field name="name">ecommerce2.order.form</field>
+        <field name="model">ecommerce2.order</field>
+        <field name="arch" type="xml">
+            <form>
+            <header>
+                <button name="action_confirm"
+                        type="object"
+                        string="Tasdiqlash"
+                        class="btn-primary"
+                        invisible = "order_status in ['confirm', 'deliver', 'cancel']"/>
+                <button name="action_deliver"
+                        type="object"
+                        string="Yetkazib berildi"
+                        class="btn-success"
+                        invisible = "order_status in ['deliver', 'cancel', 'new']"/>
+                <button name="action_cancel"
+                        type="object"
+                        string="Bekor qilish"
+                        class="btn-danger"
+                        invisible = "order_status in ['cancel', 'deliver', 'new']"/>
+                <field name="order_status" widget="statusbar" 
+                           statusbar_visible="new,confirm,deliver,cancel"/>            
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="delivery_deadline"/>
+                        <field name="delivery_days_left"/>
+                    </group>
+                    <group>
+                        <field name="product_count"/>
+                        <field name="order_status"/>
+                        <field name="amount"/>
+                    </group>
+                </group>
+
+                <notebook>
+                <page string="Buyurtma Mahsulotlar">
+                    <field name="product_ids">
+                    <list editable="bottom">
+                    <field name="product_id"/>
+                    <field name="count"/>
+                    <field name="price"/>
+                    <field name="discount"/>
+                    <field name="real_price"/>
+                    <field name="tex"/>
+                    <field name="tex_amount"/>
+                    <field name="total_price"/>
+                    <field name="profit_percent"/>
+                    <field name="profit"/>
+
+                    </list>
+                    </field>
+                </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<record id="ecommerce2_order_views_action" model="ir.actions.act_window">
+        <field name="name">Buyurtmalar</field>
+        <field name="res_model">ecommerce2.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="ecommerce2_order_submenu" name="Buyurtmalar" parent="ecommerce2_menu" action="ecommerce2_order_views_action"/>
+
+</odoo>
