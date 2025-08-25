@@ -1,0 +1,106 @@
+<odoo>
+
+<record id="service_customer_views_list" model="ir.ui.view">
+    <field name="name">service.customer.list</field>
+    <field name="model">service.customer</field>
+    <field name="arch" type="xml">
+        <list>
+        <field name="full_name"/>
+        <field name="phone"/>
+        <field name="order_count"/>
+        <field name="total_payment"/>
+        </list>
+    </field>
+</record>
+
+<record id="service_customer_views_form" model="ir.ui.view">
+    <field name="name">service.customer.form</field>
+    <field name="model">service.customer</field>
+    <field name="arch" type="xml">
+        <form>
+        <header>
+            <button name="action_close_debt"
+            type="object"
+            string="Qarzdorlik to'lovi"
+            class="btn-primary"/>
+            <button name="action_cleanup_zero_payments"
+            type="object"
+            string="Keraksiz to'lovlarni o'chirish"
+            class="btn-info"/>
+            <button name="action_cleanup_cancelled_orders"
+            type="object"
+            string="Keraksiz buyurtmalarni o'chirish"
+            class="btn-info"/>
+        </header>
+
+        <sheet>
+        <div class="oe_button_box" name="button_box">
+
+            <button name="order_count_button" type="object"
+            class="oe_stat_button" icon="fa-pencil-square-o">
+            <field name='order_count' widget='statinfo' string="Mahsulotlar"/>
+            </button>
+
+            <button name="payment_count_button" type="object"
+            class="oe_stat_button" icon="fa-pencil-square-o">
+            <field name='payment_count' widget='statinfo' string="Buyurtmalar"/>
+            </button>
+            </div>
+            <group>
+                <group>
+                    <field name="full_name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <field name="mobile"/>
+                    <field name="email"/>
+                    <field name="address"/>
+                </group>
+                <group>
+                    <field name="order_count"/>
+                    <field name="total_payment"/>
+                    <field name="balance_due"/>
+                    <field name="avg_rating"/>
+                    <field name="last_order_date"/>
+                    <field name="last_payment_date"/>
+                </group>
+                <notebook>
+                    <page string="Faol buyurtmalar">
+                        <field name="active_order_ids">
+                        <list editable="bottom">
+                                <field name="center_id"/>
+                                <field name="technician_id"/>
+                                <field name="order_date"/>
+                                <field name="state"/>
+                                <field name="total_amount"/>
+                        </list>
+                        </field>
+                    </page>
+                    <page string="Berilgan baholar">
+                        <field name="rating_ids">
+                            <list editable="bottom">
+                                <field name="center_id"/>
+                                <field name="technician_id"/>
+                                <field name="order_id"/>
+                                <field name="score"/>
+                                <field name="rating_date"/>
+                            </list>
+                        </field>
+                    </page>
+
+                </notebook>
+            </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="service_customer_action" model="ir.actions.act_window">
+    <field name="name">Mijozlar</field>
+    <field name="res_model">service.customer</field>
+    <field name="view_mode">list,form</field>
+</record>
+
+<menuitem id="service_menu" name="Xizmat ko'rsatish"/>
+<menuitem id="service_submenu_customer" name="Mijozlar" parent="service_menu" action="service_customer_action"/>
+
+</odoo>
