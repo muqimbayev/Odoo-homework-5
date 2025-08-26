@@ -53,7 +53,6 @@ class ServiceCustomer(models.Model):
             "domain": [("customer_id", "in", self.order_ids.mapped("customer_id"))],
 
         }
-
     def payment_count_button(self):
         return {
             "type": "ir.actions.act_window",
