@@ -1,0 +1,149 @@
+<odoo>
+    <record id="service_country_views_list" model="ir.ui.view">
+        <field name="name">service.country.list</field>
+        <field name="model">service.country</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="phone_code"/>
+                <field name="center_count"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="service_country_views_form" model="ir.ui.view">
+        <field name="name">service.country.form</field>
+        <field name="model">service.country</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_deactivate"
+                            string="Nofaol qilish"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_activate"
+                            string="Aktiv qilish"
+                            type="object"
+                            class="btn-success"/>
+                    <button name="action_deactivate_idle_centers"
+                            string="Markazni nofaol"
+                            type="object"
+                            class="btn-info"/>
+                    <button name="action_cleanup_zero_payments"
+                            string="0 summani o'chirsh"
+                            type="object"
+                            class="btn-info"/>
+                    <button name="action_finish_all_in_progress"
+                            string="Buyurtmalarni tugatish"
+                            type="object"
+                            class="btn-info"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                            <button name="center_count_button" type="object"
+                            class="oe_stat_button" icon="fa-building">
+                            <field name='center_count' widget='statinfo' string="Markazlar"/>
+                            </button>
+
+                            <button name="done_order_button" type="object"
+                            class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name='done_order_count' widget='statinfo' string="Buyurtmalar"/>
+                            </button>
+                        </div>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="phone_code"/>
+                        <field name="avg_rating"/>
+                        <field name="is_active"/>
+                    </group>
+                    <group>
+                        <field name="technician_count"/>
+                        <field name="state_count"/>
+                        <field name="center_count"/>
+                        <field name="active_order_count"/>
+                        <field name="total_revenue"/>
+                    </group>
+                    <notebook>
+                        <page string="Viloyatlar">
+                            <field name="state_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="is_active"/>
+                                    <field name="center_count"/>
+                                    <field name="active_order_count"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Tumanlar">
+                            <field name="district_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="state_id"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Bugungi buyurtmalar">
+                            <field name="today_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="center_id"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Faol buyurtmalar">
+                            <field name="active_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="center_id"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Yakunlangan buyurtmalar">
+                            <field name="done_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="center_id"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_country_action" model="ir.actions.act_window">
+        <field name="name">Davlatlar</field>
+        <field name="res_model">service.country</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="service_submenu_country" name="Davlatlar" parent="service_menu" action="service_country_action"/>
+</odoo>

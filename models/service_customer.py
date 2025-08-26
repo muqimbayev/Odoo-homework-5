@@ -4,7 +4,7 @@ class ServiceCustomer(models.Model):
     _name = "service.customer"
     _description = "Mijozlar"
 
-    full_name = fields.Char(string="To'liq ism familyasi")
+    full_name = fields.Char(string="To'liq ism familyasi", required=True)
     code = fields.Char(string="Kodi")
     phone = fields.Char(string="Telefon raqami")
     mobile = fields.Char(string="Qo'shimcha telefon raqami")
@@ -34,29 +34,46 @@ class ServiceCustomer(models.Model):
 
     #Vazifa: shu mijozga tegishli summasi 0 bo‘lgan service.payment yozuvlarini topib unlink qilish.
     def action_cleanup_zero_payments(self):
-        pass
+        zero_payments = self.env['service.payment'].search([('amount', '=', 0), ('customer_id', '=', self.id)])
+        zero_payments.unlink()
 
     #Vazifa: shu mijozning state='cancelled' bo‘lgan buyurtmalarini topib o‘chirish (unlink).
     def action_cleanup_cancelled_orders(self):
-        pass
+        cancelled_orders = self.env['service.order'].search([('state', '=', 'cancelled'), ('customer_id', '=', self.id)])
+        cancelled_orders.unlink()
 
 
     #info-button
     def order_count_button(self):
-        pass
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Buyurtmalar",
+            "res_model": "service.order",
+            "view_mode": "list,form",
+            "domain": [("customer_id", "in", self.order_ids.mapped("customer_id"))],
+
+        }
 
     def payment_count_button(self):
-        pass
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Buyurtmalar",
+            "res_model": "service.order",
+            "view_mode": "list,form",
+            "domain": [("customer_id", "in", self.payment_ids.mapped("customer_id"))],
+        }
 
 
     #compute
     @api.depends('order_ids')
     def _compute_active_order_ids(self):
-        self.active_order_ids = self.env['service.order'].search(domain=[('is_active', '=', True)])
+        for record in self:
+            record.active_order_ids = self.env['service.order'].search(domain=[('state', 'not in', ['cancelled', 'done']), ('customer_id', '=', record.id)])
 
     @api.depends('order_ids')
     def _compute_center_ids(self):
-        self.center_ids = self.order_ids.mapped('center_id')._origin
+        for record in self:
+            record.center_ids = self.order_ids.mapped('center_id')._origin
 
     @api.depends('order_ids')
     def _compute_order_count(self):
@@ -66,16 +83,18 @@ class ServiceCustomer(models.Model):
 
     @api.depends('order_ids')
     def _compute_payment_count(self):
-        self.payment_count = self.env['service.payment'].search_count([('customer_id', '=', self.id)])
+        for record in self:
+            record.payment_count = self.env['service.payment'].search_count([('customer_id', '=', record.id)])
 
-    @api.depends('order_ids.done')
+    @api.depends('order_ids.state')
     def _compute_done_order_count(self):
-        self.done_order_count = self.env['service.order'].search_count([('customer_id', '=', self.id), ('state', '=', 'done')])
+        for record in self:
+            record.done_order_count = self.env['service.order'].search_count([('customer_id', '=', record.id), ('state', '=', 'done')])
 
     @api.depends('payment_ids.amount')
     def _compute_total_payment(self):
         for record in self:
-            record.total_payment = sum(record.payment_ids.mapped('amount'))
+            record.total_payment = sum(record.payment_ids.filtered(lambda x: x.state == 'confirmed').mapped('amount'))
 
     @api.depends('order_ids.balance_due')
     def _compute_balance_due(self):

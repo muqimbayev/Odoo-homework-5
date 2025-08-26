@@ -24,6 +24,10 @@ Long description of module's purpose
     'data': [
         'security/ir.model.access.csv',
         'views/customer_views.xml',
+        'views/center_views.xml',
+        'views/country_views.xml',
+        'views/state_views.xml',
+        'views/district_views.xml',
 
     ],
     # only loaded in demonstration mode

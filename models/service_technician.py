@@ -4,7 +4,7 @@ class ServiceTechnican(models.Model):
     _name = "service.technician"
     _description = "Ustalar"
 
-    full_name = fields.Char("To'liq ism familyasi")
+    full_name = fields.Char("To'liq ism familyasi", required=True)
     code = fields.Char(string="Kodi")
     is_active = fields.Boolean(string="Faolligi")
     center_id = fields.Many2one(comodel_name="service.center", string="Markazi")

@@ -1,0 +1,138 @@
+<odoo>
+    <record id="service_state_views_list" model="ir.ui.view">
+        <field name="name">service.state.list</field>
+        <field name="model">service.state</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="country_id"/>
+                <field name="area_km2"/>
+                <field name="population"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="service_state_views_form" model="ir.ui.view">
+        <field name="name">service.state.form</field>
+        <field name="model">service.state</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate"
+                            type="object"
+                            string="Faollashtitish"
+                            class="btn-primary"/>
+                    <button name="action_deactivate"
+                            string="Nofaollashtirish"
+                            type="object"
+                            class="btn-danger"/>
+                    <button name="action_cleanup_zero_payments"
+                            type="object"
+                            class="btn-info"
+                            string="0 summani o'chirish"/>
+                    <button name="action_finish_all_in_progress"
+                            string="Jarayonni tugatish"
+                            type="object"
+                            class="btn-info"/>
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="country_id"/>
+                        <field name="population"/>
+                        <field name="area_km2"/>
+                        <field name="is_active"/>
+
+
+                    </group>
+                    <group>
+                        <field name="latitude"/>
+                        <field name="longtitude"/>
+                        <field name="technician_count"/>
+                        <field name="center_count"/>
+                        <field name="district_count"/>
+                        <field name="total_revenue"/>
+                        <field name="avg_rating"/>
+                    </group>
+                    <notebook>
+                        <page string="Tumanlar">
+                            <field name="district_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="population"/>
+                                    <field name="center_count"/>
+                                    <field name="technician_count"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Service Markazlari">
+                            <field name="center_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="active_order_count"/>
+                                    <field name="technician_count"/>
+                                    <field name="total_revenue"/>
+                                    <field name="is_active"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Faol buyurtmalar">
+                            <field name="active_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="state"/>
+                                    <field name="order_date"/>
+                                    <field name="payment_total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Bugungi buyurtmalar">
+                            <field name="today_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="state"/>
+                                    <field name="order_date"/>
+                                    <field name="payment_total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Yakunlangan buyurtmalar">
+                            <field name="done_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="technician_id"/>
+                                    <field name="state"/>
+                                    <field name="order_date"/>
+                                    <field name="payment_total"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_state_action" model="ir.actions.act_window">
+        <field name="name">Viloyatlar</field>
+        <field name="res_model">service.state</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="service_submenu_state" name="Viloyatlar" parent="service_menu" action="service_state_action"/>
+</odoo>

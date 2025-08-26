@@ -37,13 +37,13 @@
         <div class="oe_button_box" name="button_box">
 
             <button name="order_count_button" type="object"
-            class="oe_stat_button" icon="fa-pencil-square-o">
-            <field name='order_count' widget='statinfo' string="Mahsulotlar"/>
+            class="oe_stat_button" icon="fa-shopping-cart">
+            <field name='order_count' widget='statinfo' string="Buyurtmalar"/>
             </button>
 
             <button name="payment_count_button" type="object"
-            class="oe_stat_button" icon="fa-pencil-square-o">
-            <field name='payment_count' widget='statinfo' string="Buyurtmalar"/>
+            class="oe_stat_button" icon="fa-credit-card">
+            <field name='payment_count' widget='statinfo' string="To'lovlar"/>
             </button>
             </div>
             <group>

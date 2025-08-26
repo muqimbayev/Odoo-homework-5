@@ -1,10 +1,11 @@
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 
 class ServiceOrder(models.Model):
     _name = "service.order"
     _description = "Buyurtmalar"
 
-    name = fields.Char(string="Buyurtma raqami")
+    name = fields.Char(string="Buyurtma raqami", required=True)
     center_id = fields.Many2one(comodel_name="service.center", string="Servis markazi")
     customer_id = fields.Many2one(comodel_name="service.customer", string="Mijoz")
     technician_id = fields.Many2one(comodel_name="service.technician", string="Usta")
@@ -59,6 +60,4 @@ class ServiceOrder(models.Model):
     # Vazifa: balance_due <= 0 bo‘lsa state='done' qilish; aks holda xabar berish (status o‘zgarmaydi).
     def action_close_if_paid(self):
         pass
-
-    
 

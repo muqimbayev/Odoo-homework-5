@@ -4,7 +4,7 @@ class ServicePayment(models.Model):
     _name = "service.payment"
     _description = "To'lovlar"
 
-    name = fields.Char(string="To'lov raqami")
+    name = fields.Char(string="To'lov raqami", required=True)
     center_id = fields.Many2one(comodel_name="service.center", string="Markaz", compute="_compute_center_id") #0
     order_id = fields.Many2one(comodel_name="service.order", string="Buyurtma")
     customer_id = fields.Integer(string="Mijoz", compute="_compute_customer_id") #0
