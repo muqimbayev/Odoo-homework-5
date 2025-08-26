@@ -62,8 +62,7 @@ class ServiceCustomer(models.Model):
             "domain": [("customer_id", "in", self.payment_ids.mapped("customer_id"))],
         }
 
-
-    #compute
+    #Compute
     @api.depends('order_ids')
     def _compute_active_order_ids(self):
         for record in self:
