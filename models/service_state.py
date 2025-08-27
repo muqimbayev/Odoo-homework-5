@@ -116,7 +116,7 @@ class ServiceState(models.Model):
         for record in self:
             ratings = self.env['service.order.rating'].search([('center_id.state_id', '=', record.id)])
             if ratings:
-                record.avg_rating = sum(ratings.mapped('amount'))/len(ratings)
+                record.avg_rating = sum(ratings.mapped('score'))/len(ratings)
             else:
                 record.avg_rating = 0
 

@@ -43,7 +43,7 @@
 
                             <button name="order_count_button" type="object"
                             class="oe_stat_button" icon="fa-shopping-cart">
-                            <field name='done_order_count' widget='statinfo' string="Buyurtmalar"/>
+                            <field name='active_order_count' widget='statinfo' string="Buyurtmalar"/>
                             </button>
 
                             <button name="payment_count_button" type="object"
@@ -87,8 +87,8 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Bugungi buyurtmalar">
-                                <field name="today_order_ids">
+                            <page string="Faol buyurtmalar">
+                                <field name="active_order_ids">
                                 <list editable="bottom">
                                     <field name="name"/>
                                     <field name="customer_id"/>

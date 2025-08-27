@@ -33,7 +33,8 @@ class ServiceCenter(models.Model):
     avg_rating = fields.Float(string="O'rtacha baho", compute="_compute_avg_rating") #1
     utilization_rate = fields.Float(string="Bandlik foizi", compute="_compute_utilization_rate") #1
     last_order_date = fields.Date(string="Oxirigi buyurtma sanasi", compute="_compute_last_order_date") #1
-    payment_count = fields.Integer(string="To'lovlar soni", compute="_compute_payment_count") #0
+    payment_count = fields.Integer(string="To'lovlar soni", compute="_compute_payment_count") #1
+    active_order_ids = fields.One2many(comodel_name="service.order",  compute="_compute_active_order_ids") #1
 
     #Mathod
     #Vazifa: agar faol buyurtma bo‘lmasa markazni nofaol qilish.
@@ -64,8 +65,7 @@ class ServiceCenter(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "service.payment",
             "view_mode": "list,form",
-            "domain": [("center_id", "in", self.payment_ids.mapped("center_id").ids)],
-
+            "domain": [("order_id", "in", self.order_ids.ids)],
         }
 
     def order_count_button(self):
@@ -74,7 +74,7 @@ class ServiceCenter(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "service.order",
             "view_mode": "list,form",
-            "domain": [("center_id", "in", self.order_ids.mapped("center_id").ids)],
+            "domain": [("center_id", "=", self.id)],
         }
 
     #Compute
@@ -86,7 +86,7 @@ class ServiceCenter(models.Model):
     @api.depends('order_ids', 'order_ids.state')
     def _compute_active_order_count(self):
         for record in self:
-            record.active_order_count = len(record.order_ids.filtered(lambda x: x.state != 'done' and x.state!='cancelled'))
+            record.active_order_count = len(record.active_order_ids)
 
     @api.depends('order_ids', 'order_ids.state')
     def _compute_done_order_count(self):
@@ -101,7 +101,7 @@ class ServiceCenter(models.Model):
     @api.depends('order_ids')
     def _compute_today_orders(self):
         for record in self:
-            record.today_order_ids = record.order_ids.filtered(lambda x: x.order_date.date()==fields.date.today() and x.center_id == record.id)
+            record.today_order_ids = record.order_ids.filtered(lambda x: x.order_date and x.order_date.date()==fields.Date.today() and x.center_id == record.id)
 
     @api.depends('today_order_ids')
     def _compute_today_order_count(self):
@@ -133,8 +133,10 @@ class ServiceCenter(models.Model):
     @api.depends('order_ids')
     def _compute_last_order_date(self):
         for record in self:
-            if record.order_ids:
-                record.last_order_date = max(record.order_ids.mapped('order_date'))
+
+            last_order = self.env['service.order'].search([('center_id', '=', record.id)], order="order_date desc", limit=1)
+            if last_order:
+                record.last_order_date = last_order.order_date
             else:
                 record.last_order_date=False
 
@@ -158,4 +160,8 @@ class ServiceCenter(models.Model):
             if count>1:
                 raise ValidationError("Markaz kodi takrorlanmas bo'lishi kerak")
 
+    @api.depends()
+    def _compute_active_order_ids(self):
+            for record in self:
+                record.active_order_ids = self.env['service.order'].search([('center_id', '=', record.id), ('state', 'not in', ['cancelled', 'done'])])
 

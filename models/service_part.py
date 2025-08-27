@@ -4,17 +4,17 @@ class ServicePart(models.Model):
     _name = "service.part"
     _description = "Detallar"
 
-    name = fields.Char(string="Nomi")
+    name = fields.Char(string="Nomi", required=True)
     code = fields.Char(string="Kodi")
-    is_active = fields.Boolean(string="Faolligi")
+    is_active = fields.Boolean(string="Faolligi", default=True)
     description = fields.Text(string="Izoh")
 
     #Method
     #Vazifa: detalni nofaol qilish (is_active=False).
     def action_deactivate(self):
-        pass
+        self.write({'is_active': False})
 
     #Vazifa: detalni faol qilish (is_active=True).
     def action_activate(self):
-        pass
+        self.write({'is_active': True})
 

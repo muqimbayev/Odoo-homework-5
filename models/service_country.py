@@ -23,9 +23,10 @@ class ServiceCountry(models.Model):
     today_order_ids = fields.One2many(comodel_name="service.order",  compute="_compute_today_order_ids") #1
     today_order_count = fields.One2many(comodel_name="service.order",  compute="_compute_today_order_count") #1
     total_revenue = fields.Float(string="Jami tushum", compute="_compute_total_revenue") #1
-    avg_rating = fields.Float(string="O'rtacha rating", compute="_compute_avg_rating") #0
-    last_date_order = fields.Date(string="Oxirigi buyurtma sanasi", compute="_compute_last_date_order") #0
-
+    avg_rating = fields.Float(string="O'rtacha rating", compute="_compute_avg_rating") #1
+    last_date_order = fields.Date(string="Oxirigi buyurtma sanasi", compute="_compute_last_date_order") #1
+    order_ids = fields.One2many(comodel_name='service.order', compute="_compute_order_ids") #1
+    order_count = fields.Integer(compute="_compute_order_count")  #1
     #Method
     #Vazifa: ushbu davlatni nofaol qilish (is_active=False).
     def action_deactivate(self):
@@ -57,7 +58,7 @@ class ServiceCountry(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "service.center",
             "view_mode": "list,form",
-            "domain": [("country_id", "in", self.center_ids.mapped("country_id").ids)],
+            "domain": [("country_id", "=", self.id)]
         }
 
     def done_order_button(self):
@@ -66,7 +67,7 @@ class ServiceCountry(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "service.order",
             "view_mode": "list,form",
-            "domain": [("center_id.country_id", "in", self.done_order_ids.mapped("center_id.country_id").ids)],
+            "domain": [("center_id.country_id", "in", self.order_ids.mapped("center_id.country_id").ids)]
         }
 
     #compute
@@ -162,5 +163,13 @@ class ServiceCountry(models.Model):
             if phone>1:
                 raise ValidationError("Davlat telefon kodi takrorlanmasligi kerak!")
 
+    @api.depends()
+    def _compute_order_ids(self):
+        for record in self:
+            record.order_ids = self.env['service.order'].search([('center_id.country_id', '=', record.id)])
 
+    @api.depends()
+    def _compute_order_count(self):
+        for record in self:
+            record.order_count = len(record.order_ids)
 

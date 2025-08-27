@@ -58,6 +58,7 @@
                 <group>
                     <field name="order_count"/>
                     <field name="total_payment"/>
+                    <field name="total_amount"/>
                     <field name="balance_due"/>
                     <field name="avg_rating"/>
                     <field name="last_order_date"/>

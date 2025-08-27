@@ -28,6 +28,11 @@ Long description of module's purpose
         'views/country_views.xml',
         'views/state_views.xml',
         'views/district_views.xml',
+        'views/technician_views.xml',
+        'views/order_views.xml',
+        'views/part_views.xml',
+        'views/payment_views.xml',
+        'views/service_order_rating.xml',
 
     ],
     # only loaded in demonstration mode

@@ -3,6 +3,7 @@ from odoo import fields, models, api
 class ServiceCustomer(models.Model):
     _name = "service.customer"
     _description = "Mijozlar"
+    _rec_name = "full_name"
 
     full_name = fields.Char(string="To'liq ism familyasi", required=True)
     code = fields.Char(string="Kodi")
@@ -16,21 +17,30 @@ class ServiceCustomer(models.Model):
 
     #compute
     center_ids = fields.Many2many(comodel_name="service.order", compute="_compute_center_ids") #1
+    # center_ids = fields.Many2many(comodel_name="service.order", related="order_ids.center_id") #1
     order_count = fields.Integer(string="Buyurtmalar soni", compute="_compute_order_count") #1
     payment_count = fields.Integer(string="Buyurtmalar soni", compute="_compute_payment_count") #1
     active_order_ids = fields.One2many(comodel_name="service.order", inverse_name="customer_id", compute="_compute_active_order_ids") #1
     done_order_count = fields.Integer(string="Bajarilgan buyurtmalar soni", compute="_compute_done_order_count") #1
-    total_payment = fields.Float(string="Jami to'lov summasi", compute="_compute_total_payment") #1
+    total_payment = fields.Float(string="Jami summasi", compute="_compute_total_payment") #1
     balance_due = fields.Float(string="Jami qarz summasi", compute="_compute_balance_due") #1
     avg_rating = fields.Float(string="O'rtacha baho", compute="_compute_avg_rating") #1
     last_order_date = fields.Date(string="Oxirigi buyurtma sanasi", compute="_compute_last_order_date") #1
     last_payment_date = fields.Date(string="Oxirigi to'lov sanasi", compute="_compute_last_payment_date") #1
-
+    total_amount = fields.Float(string="Jami to'langan summa", compute="_compute_total_amount") #1
 
     #Mathod
     #Vazifa: qarzdorligi bo’yicha to’lov yaratib, tasdiqlab yuborish.
     def action_close_debt(self):
-        pass
+        for record in self:
+            for order in record.order_ids:
+                if order.balance_due>0:
+                    self.env['service.payment'].create({
+                        "order_id": order.id,
+                        "amount": order.balance_due,
+                        "state": "confirmed"
+                    })
+                    order.balance_due = 0
 
     #Vazifa: shu mijozga tegishli summasi 0 bo‘lgan service.payment yozuvlarini topib unlink qilish.
     def action_cleanup_zero_payments(self):
@@ -50,16 +60,16 @@ class ServiceCustomer(models.Model):
             "name": "Buyurtmalar",
             "res_model": "service.order",
             "view_mode": "list,form",
-            "domain": [("customer_id", "in", self.order_ids.mapped("customer_id"))],
+            "domain": [("customer_id", "=", self.id)],
 
         }
     def payment_count_button(self):
         return {
             "type": "ir.actions.act_window",
             "name": "Buyurtmalar",
-            "res_model": "service.order",
+            "res_model": "service.payment",
             "view_mode": "list,form",
-            "domain": [("customer_id", "in", self.payment_ids.mapped("customer_id"))],
+            "domain": [("id", "in", self.payment_ids.ids)]
         }
 
     #Compute
@@ -89,10 +99,17 @@ class ServiceCustomer(models.Model):
         for record in self:
             record.done_order_count = self.env['service.order'].search_count([('customer_id', '=', record.id), ('state', '=', 'done')])
 
-    @api.depends('payment_ids.amount')
+    @api.depends('payment_ids.amount', 'payment_ids.state')
     def _compute_total_payment(self):
         for record in self:
-            record.total_payment = sum(record.payment_ids.filtered(lambda x: x.state == 'confirmed').mapped('amount'))
+            record.total_payment = sum(record.payment_ids.filtered(lambda x: x.state not in ['cancelled', 'draft']).mapped('amount'))
+
+    @api.depends('payment_ids.amount', 'payment_ids.state')
+    def _compute_total_amount(self):
+        for record in self:
+            record.total_amount = sum(
+                record.payment_ids.filtered(lambda x: x.state == 'confirmed').mapped('amount'))
+
 
     @api.depends('order_ids.balance_due')
     def _compute_balance_due(self):
@@ -110,16 +127,18 @@ class ServiceCustomer(models.Model):
     @api.depends('order_ids.order_date')
     def _compute_last_order_date(self):
         for record in self:
-            if record.order_ids:
-                record.last_order_date = max(record.order_ids.mapped('order_date'))
+            last_order = self.env['service.order'].search([('customer_id', '=', record.id)], order="order_date desc", limit=1)
+            if last_order:
+                record.last_order_date = last_order.order_date
             else:
                 record.last_order_date = False
 
     @api.depends('payment_ids.payment_date')
     def _compute_last_payment_date(self):
         for record in self:
-            if record.payment_ids:
-                record.last_payment_date = max(record.payment_ids.mapped('payment_date'))
+            last_payment = self.env['service.payment'].search([('customer_id', '=', record.id)], order="payment_date desc", limit=1)
+            if last_payment:
+                record.last_payment_date = last_payment.payment_date
             else:
                 record.last_payment_date = False
     

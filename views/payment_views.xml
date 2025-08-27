@@ -1,0 +1,70 @@
+<odoo>
+    <record id="service_payment_views_list" model="ir.ui.view">
+        <field name="name">service.payment.list</field>
+        <field name="model">service.payment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="center_id"/>
+                <field name="customer_id"/>
+                <field name="amount"/>
+                <field name="payment_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="service_payment_views_form" model="ir.ui.view">
+        <field name="name">service.payment.form</field>
+        <field name="model">service.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm"
+                            string="Tasdiqlash"
+                            class="btn-success"
+                            invisible="state in ['confirmed']"
+                            type="object"/>
+                    <button name="action_cancel"
+                            string="Bekor qilish"
+                            class="btn-danger"
+                            invisible="state in ['canceled']"
+                            type="object"/>
+                    <button name="action_reset_draft"
+                            string="Yangi holatiga qaytarish"
+                            class="btn-info"
+                            invisible="state in ['draft']"
+                            type="object"/>
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="order_id"/>
+                        <field name="center_id"/>
+                        <field name="customer_id"/>
+                        <field name="payment_date"/>
+                        <field name="amount"/>
+                        <field name="note"/>
+                    </group>
+                    <group>
+                            <field name="state"/>
+                            <field name="method"/>
+                            <field name="order_total"/>
+                            <field name="order_balance_due"/>
+                            <field name="customer_total_payment"/>
+                    </group>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_payment_action" model="ir.actions.act_window">
+        <field name="name">To'lovlar</field>
+        <field name="res_model">service.payment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="service_submenu_payment" name="To'lovlar" parent="service_menu" action="service_payment_action"/>
+</odoo>

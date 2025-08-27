@@ -50,7 +50,7 @@
 
                             <button name="done_order_button" type="object"
                             class="oe_stat_button" icon="fa-shopping-cart">
-                            <field name='done_order_count' widget='statinfo' string="Buyurtmalar"/>
+                            <field name='order_count' widget='statinfo' string="Buyurtmalar"/>
                             </button>
                         </div>
                 <group>

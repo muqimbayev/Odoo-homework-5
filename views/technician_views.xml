@@ -1,0 +1,112 @@
+<odoo>
+    <record id="service_technician_views_list" model="ir.ui.view">
+        <field name="name">service.technician.list</field>
+        <field name="model">service.technician</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="full_name"/>
+                <field name="code"/>
+                <field name="specialty"/>
+                <field name="center_id"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="service_technician_views_form" model="ir.ui.view">
+        <field name="name">service.technician</field>
+        <field name="model">service.technician</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_deactivate"
+                            string="Nofaollashtirish"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_activate"
+                            string="Aktivlashtirish"
+                            type="object"
+                            class="btn-success"/>
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="full_name"/>
+                        <field name="code"/>
+                        <field name="center_id"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="specialty"/>
+                        <field name="hire_date"/>
+                        <field name="is_active"/>
+                    </group>
+                    <group>
+                        <field name="capacity_per_day"/>
+                        <field name="is_buzy"/>
+                        <field name="active_order_count"/>
+                        <field name="done_order_count"/>
+                        <field name="today_order_count"/>
+                        <field name="utilization_rate"/>
+                        <field name="total_revenue"/>
+                        <field name="last_order_date"/>
+                    </group>
+                    <notebook>
+                        <page string="Biriktirilgan buyurtmalar">
+                            <field name="order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+                                    <field name="labor_fee"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Bugungi buyurtmalar">
+                            <field name="today_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+                                    <field name="labor_fee"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Faol buyurtmalar">
+                            <field name="active_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+                                    <field name="labor_fee"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Yakunlangan buyurtmalar">
+                            <field name="done_order_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="order_date"/>
+                                    <field name="state"/>
+                                    <field name="labor_fee"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_technician_action" model="ir.actions.act_window">
+        <field name="name">Ustalar</field>
+        <field name="res_model">service.technician</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="service_submenu_technician" name="Ustalar" parent="service_menu" action="service_technician_action"/>
+</odoo>

@@ -1,0 +1,111 @@
+<odoo>
+    <record id="service_order_views_list" model="ir.ui.view">
+        <field name="name">service.order.list</field>
+        <field name="model">service.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="center_id"/>
+                <field name="customer_id"/>
+                <field name="technician_id"/>
+                <field name="state"/>
+                <field name="state"/>
+                <field name="state"/>
+                <field name="order_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="service_order_views_form" model="ir.ui.view">
+        <field name="name">service.order.form</field>
+        <field name="model">service.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_payment"
+                            string="To'lov yaratish"
+                            type="object"
+                            invisible="state in ['cancelled', 'received', 'in_progress', 'diagnosed', 'draft']"
+                            class="btn-primary"/>
+
+                    <button name="action_receive"
+                            string="Qabul qilingan"
+                            type="object"
+                            invisible="state in ['done', 'cancelled', 'received', 'in_progress', 'diagnosed']"
+                            class="btn-info"/>
+                    <button name="action_diagnose"
+                            string="Tashxis qo'yilgan"
+                            type="object"
+                            invisible="state in ['done', 'cancelled', 'diagnosed', 'in_progress', 'draft']"
+                            class="btn-info"/>
+                    <button name="action_start_progress"
+                            string="Jarayonda"
+                            invisible="state in ['done', 'cancelled', 'in_progress', 'received', 'draft']"
+                            type="object"
+                            class="btn-info"/>
+                    <button name="action_finish"
+                            string="Bajarilgan"
+                            class="btn-success"
+                            invisible="state in ['done', 'cancelled', 'diagnosed', 'received', 'draft']"
+                            type="object"/>
+                    <button name="action_cancel"
+                            string="Bekor qilingan"
+                            type="object"
+                            class="btn-danger"/>
+                    <button name="action_cleanup_zero_payments"
+                            string="Bo‘sh to‘lovlarni o‘chirish"
+                            class="btn-info"
+                            type="object"/>
+                    <button name="action_close_if_paid"
+                            string="To‘lov tugagach yopish"
+                            type="object"
+                            class="btn-info"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,received,diagnosed,done,cancelled"/>
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="center_id"/>
+                        <field name="customer_id"/>
+                        <field name="technician_id"/>
+                        <field name="state"/>
+                        <field name="order_date"/>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="labor_fee"/>
+                        <field name="is_warranty"/>
+                        <field name="warranty_days"/>
+                        <field name="last_payment_date"/>
+                        <field name="total_amount"/>
+                        <field name="discount_amount"/>
+                        <field name="payment_total"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Buyurtma qatori">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="part_id"/>
+                                    <field name="description"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_order_action" model="ir.actions.act_window">
+        <field name="name">Buyurtmalar</field>
+        <field name="res_model">service.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="service_submenu_order" name="Buyurtmalar" parent="service_menu" action="service_order_action"/>
+</odoo>
