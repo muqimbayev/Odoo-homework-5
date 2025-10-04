@@ -1,0 +1,16 @@
+<odoo>
+
+    <record id="rental_customer_list_views" model="ir.ui.view">
+        <field name="name">rental customer list view</field>
+        <field name="model">rental_managment.customer</field>
+        <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </list>
+            
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+    <record id="order_kanban_views" model="ir.ui.view">
+        <field name="name">order kanban view</field>
+        <field name="model">rental_managment.rental_order</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="customer_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="customer_id"/></strong>
+                            <div>
+                                <div><field name="product_id"/></div>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="rental_managment_action" model="ir.actions.act_window">
+        <field name="name">Rental Orders</field>
+        <field name="res_model">rental_managment.rental_order</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="rental_managment_menu" name="Rental Management"/>
+    <menuitem id="rental_managment_submenu_order" name="Orders" parent="rental_managment_menu" action="rental_managment_action"/>
+</odoo>

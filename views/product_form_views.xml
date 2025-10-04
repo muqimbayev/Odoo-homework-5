@@ -1,0 +1,39 @@
+<odoo>
+    <record id="product_form_views" model="ir.ui.view">
+        <field name="name">product form view</field>
+        <field name="model">rental_managment.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <header> 
+                    <button name="button_broken_true" string="Broken" invisible="broken" type="object"/>
+                    <button name="button_broken_false" string="Corrected" invisible="broken != True" type="object"/>
+
+                </header>
+                <sheet>
+                <group>
+                    <field name="name"/>
+                    <group>
+                                <field name="category_id"/>
+                                <field name="availability"/>
+                                <field name="future_availability_date"/>
+                                <field name="broken"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Price List">
+                            <field name="rental_price_ids">
+                                <list editable="bottom">
+                                    <field name="interval_number"/>
+                                    <field name="interval_type"/>
+                                    <field name="price"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

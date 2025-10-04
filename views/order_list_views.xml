@@ -1,0 +1,18 @@
+<odoo>
+
+    <record id="rental_order_list_views" model="ir.ui.view">
+        <field name="name">rental order list view</field>
+        <field name="model">rental_managment.rental_order</field>
+        <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="product_id"/>
+                    <field name="status"/>
+                    <field name="total_price"/>
+                </list>
+            
+        </field>
+    </record>
+
+</odoo>

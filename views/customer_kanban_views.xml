@@ -1,0 +1,30 @@
+<odoo>
+    <record id="customer_kanban_views" model="ir.ui.view">
+        <field name="name">customer kanban view</field>
+        <field name="model">rental_managment.customer</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <div><field name="phone"/></div>
+                                <field name="email"/>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="rental_managment_customer_action" model="ir.actions.act_window">
+        <field name="name">Customer</field>
+        <field name="res_model">rental_managment.customer</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="rental_managment_submenu_customer" name="Customer" parent="rental_managment_menu" action="rental_managment_customer_action"/>
+</odoo>

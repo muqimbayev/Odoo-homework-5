@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_rental_category_manager,rental.category.manager,model_rental_managment_category,base.group_user,1,1,1,1
+
+access_rental_product_manager,rental.product.manager,model_rental_managment_product,base.group_user,1,1,1,1
+
+access_rental_price_manager,rental.price.manager,model_rental_managment_rental_price,base.group_user,1,1,1,1
+
+access_rental_customer_manager,rental.customer.manager,model_rental_managment_customer,base.group_user,1,1,1,1
+
+access_rental_order_manager,rental.order.manager,model_rental_managment_rental_order,base.group_user,1,1,1,1

@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="rental_product_list_views" model="ir.ui.view">
+        <field name="name">rental product list view</field>
+        <field name="model">rental_managment.product</field>
+        <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="availability"/>
+                    <field name="broken"/>
+                </list>
+            
+        </field>
+    </record>
+
+</odoo>

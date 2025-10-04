@@ -1,0 +1,30 @@
+<odoo>
+    <record id="customer_form_views" model="ir.ui.view">
+        <field name="name">customer form view</field>
+        <field name="model">rental_managment.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Genral Information">
+                                <field name="name"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <notebook>
+                                    <page string="Orders">
+                                    <field name="rental_order_ids">
+                                        <list editable="bottom">
+                                            <field name="product_id"/>
+                                            <field name="status"/>
+                                            <field name="start_date"/>
+                                            <field name="end_date"/>
+                                            <field name="compute_price"/>
+                                        </list>
+                                    </field>
+                                    </page>
+                                </notebook>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

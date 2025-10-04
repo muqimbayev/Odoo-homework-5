@@ -1,0 +1,31 @@
+<odoo>
+    <record id="product_kanban_views" model="ir.ui.view">
+        <field name="name">product kanban view</field>
+        <field name="model">rental_managment.product</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <div><field name="availability"/></div>
+                                <field name="future_availability_date"/>
+                                <field name="broken"/>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="rental_managment_product_action" model="ir.actions.act_window">
+        <field name="name">Product</field>
+        <field name="res_model">rental_managment.product</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="rental_managment_submenu_product" name="Product" parent="rental_managment_menu" action="rental_managment_product_action"/>
+</odoo>

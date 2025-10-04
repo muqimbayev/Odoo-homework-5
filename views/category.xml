@@ -1,0 +1,47 @@
+<odoo>
+
+    <record id="rental_category_list_views" model="ir.ui.view">
+        <field name="name">rental category list view</field>
+        <field name="model">rental_managment.category</field>
+        <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+        </field>
+    </record>
+
+    
+    <record id="rental_category_form_views" model="ir.ui.view">
+        <field name="name">rental category form view</field>
+        <field name="model">rental_managment.category</field>
+        <field name="arch" type="xml">
+                <form>
+                <sheet>
+                    <field name="name"/>
+                    <notebook>
+                        <page string="Products">
+                            <field name="product_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="future_availability_date"/>
+                                    <field name="availability"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+        </field>
+    </record>
+
+ <record id="rental_managment_category_action" model="ir.actions.act_window">
+        <field name="name">Category</field>
+        <field name="res_model">rental_managment.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="rental_managment_submenu_configuration" name="Configuration" parent="rental_managment_menu"/>
+    <menuitem id="rental_managment_submenu_category" name="Category" parent="rental_managment_submenu_configuration" action="rental_managment_category_action"/>
+
+</odoo>
+

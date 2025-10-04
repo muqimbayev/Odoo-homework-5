@@ -1,0 +1,19 @@
+<odoo>
+    <record id="rental_order_serch_view" model="ir.ui.view">
+        <field name="name">rental order search view</field>
+        <field name="model">rental_managment.rental_order</field>
+        <field name="arch" type="xml">
+            <search>   
+                <filter string="Draft Orders" name="filter_draft" domain="[('status', '=', 'draft')]"/>
+                <filter string="Confirmed Orders" name="filter_confirmed" domain="[('status', '=', 'draft')]"/>
+                <filter string="Returned Orders" name="filter_returned" domain="[('status', '=', 'draft')]"/>
+                <filter string="Cancelled Orders" name="filter_canceled" domain="[('status', '=', 'draft')]"/>
+                <group>
+                    <filter name="customer_id" string="Mijozlar" context="{'group_by':'customer_id'}"/>
+                    <filter name="product_id" string="Mijozlar" context="{'group_by':'product_id'}"/>
+
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
