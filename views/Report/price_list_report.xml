@@ -1,0 +1,64 @@
+<odoo>
+    <template id="report_rental_price_list">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="p">
+                <div class="page" style="font-family: 'Arial'; color:#2E4053;">
+
+                    <h2 style="text-align:center; color:#1F618D; border-bottom:2px solid #1F618D; padding-bottom:5px;">
+                        Rental Price List — <t t-esc="p.name"/>
+                    </h2>
+
+                    <p><strong>Category:</strong> <span style="color:#154360;"><t t-esc="p.category_id.name"/></span></p>
+                    <p><strong>Status:</strong> 
+                        <span t-if="p.availability == 'available'" style="color:green;">Available</span>
+                        <span t-elif="p.availability == 'rented'" style="color:orange;">Rented</span>
+                        <span t-elif="p.availability == 'broken'" style="color:red;">Broken</span>
+                    </p>
+
+                    <h3 style="color:#1F618D; margin-top:15px;">Price Intervals</h3>
+
+                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                        <thead>
+                            <tr style="background-color:#1F618D; color:white;">
+                                <th style="border:1px solid #ccc; padding:6px;">#</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Interval Type</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Interval Number</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Price</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="index" t-value="0"/>
+                            <t t-foreach="p.rental_price_ids" t-as="price">
+                                <tr t-att-style="'background-color:#F8F9F9;' if (index % 2 == 0) else ''">
+                                    <td style="border:1px solid #ccc; padding:6px; text-align:center;">
+                                        <t t-esc="index + 1"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-esc="price.interval_type"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px; text-align:center;">
+                                        <t t-esc="price.interval_number"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px; text-align:right;">
+                                        <t t-esc="price.price"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-esc="(price.write_date or price.create_date).strftime('%Y-%m-%d %H:%M')"/>
+                                    </td>
+                                </tr>
+                                <t t-set="index" t-value="index + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top:20px; text-align:right; font-size:12px; color:#555;">
+                        <p>Generated on 
+                            <t t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M')"/>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

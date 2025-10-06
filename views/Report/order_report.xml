@@ -1,0 +1,132 @@
+<!-- <odoo>
+
+    <template id="rental_order_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Rental Order <t t-esc="o.name"/></h2>
+                    <p><strong>Customer name</strong><t t-esc="o.customer_id.name"/></p>
+                    <p><strong>Customer phone</strong><t t-esc="o.customer_id.phone"/></p>
+                    <p><strong>Customer email</strong><t t-esc="o.customer_id.email"/></p>
+                    <p><strong>Product name</strong><t t-esc="o.product_id.name"/></p>
+                    <p><strong>Product category</strong><t t-esc="o.product_id.category_id.name"/></p>
+                    <p><strong>Start date</strong><t t-esc="o.start_date"/></p>
+                    <p><strong>End date</strong><t t-esc="o.end_date"/></p>
+                    <p><strong>Duration</strong><t t-esc="o.human_readable_duration"/></p>
+                    <p><strong>Total Price</strong><t t-esc="o.total_price"/></p>
+                    <p><strong>Complete Price</strong><t t-esc="o.compute_price"/></p>
+                    <p><strong>Status</strong><t t-esc="o.status"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo> -->
+
+<odoo>
+    <template id="rental_order_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-family: 'Helvetica', sans-serif; color: #333;">
+                    
+                    <!-- HEADER -->
+                    <div style="text-align:center; margin-bottom:20px;">
+                        <h2 style="margin:0; font-size:24px; color:#2b2b2b;">Rental Order Report</h2>
+                        <p style="margin:5px 0; font-size:14px; color:#777;">Order Reference: <strong><t t-esc="o.name"/></strong></p>
+                        <hr style="border:1px solid #ddd; margin-top:10px;"/>
+                    </div>
+
+                    <!-- CUSTOMER SECTION -->
+                    <h3 style="background-color:#f4f4f4; padding:8px; border-left:4px solid #007bff;">Customer Information</h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:15px;">
+                        <tr>
+                            <td style="padding:5px 10px; width:30%;"><strong>Customer Name:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.customer_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px 10px;"><strong>Phone:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.customer_id.phone"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px 10px;"><strong>Email:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.customer_id.email"/></td>
+                        </tr>
+                    </table>
+
+                    <!-- PRODUCT SECTION -->
+                    <h3 style="background-color:#f4f4f4; padding:8px; border-left:4px solid #28a745;">Product Information</h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:15px;">
+                        <tr>
+                            <td style="padding:5px 10px; width:30%;"><strong>Product Name:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.product_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px 10px;"><strong>Category:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.product_id.category_id.name"/></td>
+                        </tr>
+                    </table>
+
+                    <!-- RENTAL DETAILS -->
+                    <h3 style="background-color:#f4f4f4; padding:8px; border-left:4px solid #ffc107;">Rental Details</h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:15px;">
+                        <tr>
+                            <td style="padding:5px 10px; width:30%;"><strong>Start Date:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.start_date"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px 10px;"><strong>End Date:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.end_date"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px 10px;"><strong>Duration:</strong></td>
+                            <td style="padding:5px 10px;"><t t-esc="o.human_readable_duration"/></td>
+                        </tr>
+                    </table>
+
+                    <!-- PRICE INFORMATION -->
+                    <h3 style="background-color:#f4f4f4; padding:8px; border-left:4px solid #17a2b8;">Pricing Summary</h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+                        <tr style="background-color:#fafafa;">
+                            <td style="padding:8px 10px; width:30%;"><strong>Total Price:</strong></td>
+                            <td style="padding:8px 10px;"><t t-esc="o.total_price"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 10px;"><strong>Computed Price:</strong></td>
+                            <td style="padding:8px 10px;"><t t-esc="o.compute_price"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px 10px;"><strong>Status:</strong></td>
+                            <td style="padding:8px 10px;">
+                                <t t-if="o.status == 'confirmed'">
+                                    <span style="color:green; font-weight:bold;">Confirmed</span>
+                                </t>
+                                <t t-elif="o.status == 'returned'">
+                                    <span style="color:blue; font-weight:bold;">Returned</span>
+                                </t>
+                                <t t-elif="o.status == 'cancel'">
+                                    <span style="color:red; font-weight:bold;">Cancelled</span>
+                                </t>
+                                <t t-else="">
+                                    <span style="color:#555;"><t t-esc="o.status"/></span>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- FOOTER -->
+                   <!-- FOOTER -->
+<div style="text-align:center; margin-top:40px; font-size:12px; color:#888;">
+    <hr style="border:1px solid #ddd; margin:10px 0;"/>
+    <p>Thank you for choosing our rental service!</p>
+   <p>
+    Generated on 
+    <t t-esc="o.env['ir.qweb.field.datetime'].value_to_html(o.env.cr.now(), {'format': 'dd MMM yyyy HH:mm'})"/>
+</p>
+
+</div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

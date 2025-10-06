@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="rental_order_action" model="ir.actions.report">
+        <field name="name">Rental Order</field>
+        <field name="model">rental_managment.rental_order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rental_managment.rental_order_report</field>
+        <field name="report_file">rental_managment.rental_order_report</field>
+        <field name="print_report_name">'Rental Order %s' % object.name</field>
+        <field name="binding_model_id" ref="rental_managment.model_rental_managment_rental_order"/>
+        <field name="binding_type">report</field>
+
+    </record>
+</odoo>

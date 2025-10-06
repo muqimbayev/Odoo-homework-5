@@ -1,0 +1,12 @@
+<odoo>
+    <record id="action_rental_price_list_report" model="ir.actions.report">
+        <field name="name">Rental Price List</field>
+        <field name="model">rental_managment.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">rental_managment.report_rental_price_list</field>
+        <field name="report_file">rental_managment.report_rental_price_list</field>
+        <field name="print_report_name">'Price List - %s' % object.name</field>
+        <field name="binding_model_id" ref="rental_managment.model_rental_managment_product"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

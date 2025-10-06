@@ -36,6 +36,15 @@ Long description of module's purpose
         'views/product_list_views.xml',
         'views/category.xml',
         'views/rental_price.xml',
+        'views/Report/order_report.xml',
+        'views/Report/order_report_action.xml',
+        'views/Report/product_rental_history_report.xml',
+        'views/Report/rental_product_history_action.xml',
+        'views/Report/price_list_report.xml',
+        'views/Report/price_list_action.xml',
+
+
+
 
 
 

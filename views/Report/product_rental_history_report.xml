@@ -1,0 +1,113 @@
+<!-- <odoo>
+    <template id="report_product_rental_history">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="p">
+                <div class="page">
+                    <h2>Product Rental History — <t t-esc="p.name"/></h2>
+                    <p><strong>Category:</strong> <t t-esc="p.category_id.name"/></p>
+                    <p><strong>Status:</strong> <t t-esc="p.availability"/></p>
+
+                    <h3>Rental Orders</h3>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Complete Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="p.rental_order_ids" t-as="order">
+                                <tr>
+                                    <td><t t-esc="order.customer_id.name"/></td>
+                                    <td><t t-esc="order.start_date"/></td>
+                                    <td><t t-esc="order.end_date"/></td>
+                                    <td><t t-esc="order.status"/></td>
+                                    <td><t t-esc="order.compute_price"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo> -->
+
+
+<odoo>
+    <template id="report_product_rental_history">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="p">
+                <div class="page" style="font-family: 'Arial'; color: #333;">
+
+                    <!-- Title -->
+                    <h2 style="text-align:center; color:#2E86C1; border-bottom:2px solid #2E86C1; padding-bottom:8px; margin-bottom:15px;">
+                        Product Rental History: <t t-esc="p.name"/>
+                    </h2>
+
+                    <!-- Product Info -->
+                    <div style="margin-bottom:15px; font-size:14px;">
+                        <p><strong>Category:</strong> <span style="color:#1A5276;"><t t-esc="p.category_id.name"/></span></p>
+                        <p><strong>Status:</strong> 
+                            <span t-if="p.availability == 'available'" style="color:green;">Available</span>
+                            <span t-elif="p.availability == 'rented'" style="color:orange;">Rented</span>
+                            <span t-elif="p.broken == '1'" style="color:red;">Broken</span>
+                        </p>
+                    </div>
+
+                    <!-- Rental Orders Table -->
+                    <h3 style="margin-top:20px; color:#2E86C1;">Rental Orders</h3>
+
+                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                        <thead>
+                            <tr style="background-color:#2E86C1; color:white;">
+                                <th style="border:1px solid #ccc; padding:6px;">#</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Customer</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Start Date</th>
+                                <th style="border:1px solid #ccc; padding:6px;">End Date</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Status</th>
+                                <th style="border:1px solid #ccc; padding:6px;">Complete Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="p.rental_order_ids" t-as="order" t-foreach-index="i">
+<tr t-att-style="'background-color:#F8F9F9;'">
+                                    <td style="border:1px solid #ccc; padding:6px; text-align:center;">
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-esc="order.customer_id.name"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-esc="order.start_date"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-esc="order.end_date"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px;">
+                                        <t t-if="order.status == 'draft'">🟡 Draft</t>
+                                        <t t-elif="order.status == 'confirmed'">🟢 Confirmed</t>
+                                        <t t-elif="order.status == 'returned'">🔵 Returned</t>
+                                        <t t-elif="order.status == 'cancelled'">🔴 Cancelled</t>
+                                        <t t-else=""><t t-esc="order.status"/></t>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:6px; text-align:right;">
+                                        <t t-esc="order.compute_price"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Footer -->
+                    <div style="margin-top:20px; text-align:right; font-size:12px; color:#555;">
+<t t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M')"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
