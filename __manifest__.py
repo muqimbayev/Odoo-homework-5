@@ -23,6 +23,7 @@ Long description of module's purpose
     # always loaded
     'data': [
         'data/ir_sequience.xml',
+        'security/groups.xml',
         'security/ir.model.access.csv',
         'views/order_kanban_views.xml',
         'views/order_form_views.xml',
